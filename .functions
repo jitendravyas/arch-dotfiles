@@ -1,0 +1,185 @@
+#───────────────────────────────────────────────────────────────────────────────
+# mkd: create a new directory and enter it
+#───────────────────────────────────────────────────────────────────────────────
+function mkd() {
+	mkdir -p "$@" && cd "$@"
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# set_virtualenv: determine the active virtualenv's details
+#───────────────────────────────────────────────────────────────────────────────
+function set_virtualenv() {
+  if test -z "$VIRTUAL_ENV" ; then
+      PYTHON_VIRTUALENV=""
+  else
+      PYTHON_VIRTUALENV="${BLUE}[`basename \"$VIRTUAL_ENV\"`]$RESET "
+  fi
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# repeat: execute a command n times, e.g. `repeat 5 uptime`
+#───────────────────────────────────────────────────────────────────────────────
+repeat() {
+    n=$1
+    shift
+    while [ $(( n -= 1 )) -ge 0 ]
+    do
+        "$@"
+    done
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# fs: determine size of a file or total size of a directory
+#───────────────────────────────────────────────────────────────────────────────
+function fs() {
+	if du -b /dev/null > /dev/null 2>&1; then
+		local arg=-sbh
+	else
+		local arg=-sh
+	fi
+	if [[ -n "$@" ]]; then
+		du $arg -- "$@"
+	else
+		du $arg .[^.]* *
+	fi
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# diff: use Git’s colored diff when available
+#───────────────────────────────────────────────────────────────────────────────
+hash git &>/dev/null
+if [ $? -eq 0 ]; then
+	function diff() {
+		git diff --no-index --color-words "$@"
+	}
+fi
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# dataurl: create a base64 encoded data URL from a file
+#───────────────────────────────────────────────────────────────────────────────
+function dataurl() {
+	local mimeType=$(file -b --mime-type "$1")
+	if [[ $mimeType == text/* ]]; then
+		mimeType="${mimeType};charset=utf-8"
+	fi
+	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')"
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# server: start a HTTP server from a directory, optionally specifying the port
+#───────────────────────────────────────────────────────────────────────────────
+function server() {
+	local port="${1:-8000}"
+	python2 -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# phpserver: start a PHP server from a directory, optionally specifying the port
+#───────────────────────────────────────────────────────────────────────────────
+function phpserver() {
+	local port="${1:-4000}"
+	local ip=$(ipconfig getifaddr en1)
+	php -S "${ip}:${port}"
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# gz: get gzipped file size
+#───────────────────────────────────────────────────────────────────────────────
+function gz() {
+	echo "orig size (bytes): "
+	cat "$1" | wc -c
+	echo "gzipped size (bytes): "
+	gzip -c "$1" | wc -c
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# httpcompression: test if HTTP compression (RFC2616+SDCH) is enabled for a URL
+#───────────────────────────────────────────────────────────────────────────────
+function httpcompression() {
+	encoding="$(curl -LIs -H 'User-Agent: Mozilla/5 Gecko' -H 'Accept-Encoding: gzip,deflate,compress,sdch' "$1" | grep '^Content-Encoding:')" && echo "$1 is encoded using ${encoding#* }" || echo "$1 is not using any encoding"
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# json: syntax-highlight JSON strings or files
+#───────────────────────────────────────────────────────────────────────────────
+function json() {
+	if [ -t 0 ]; then
+		python2 -mjson.tool <<< "$*" | pygmentize -l javascript
+	else
+		python2 -mjson.tool | pygmentize -l javascript
+	fi
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# digga: all the dig info
+#───────────────────────────────────────────────────────────────────────────────
+function digga() {
+	dig +nocmd "$1" any +multiline +noall +answer
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# escape: escape UTF-8 characters into their 3-byte format
+#───────────────────────────────────────────────────────────────────────────────
+function escape() {
+	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
+	echo
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# unidecode: decode \x{ABCD}-style Unicode escape sequences
+#───────────────────────────────────────────────────────────────────────────────
+# 
+function unidecode() {
+	perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
+	echo
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# codepoint: get a character’s Unicode code point
+#───────────────────────────────────────────────────────────────────────────────
+function codepoint() {
+	perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
+	echo
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# extract: uncompress and expand most types compressed files
+#───────────────────────────────────────────────────────────────────────────────
+extract () {
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xvjf $1    ;;
+            *.tar.gz)    tar xvzf $1    ;;
+            *.tar.xz)    tar xvJf $1    ;;
+            *.bz2)       bunzip2 $1     ;;
+            *.rar)       unrar x $1     ;;
+            *.gz)        gunzip $1      ;;
+            *.tar)       tar xvf $1     ;;
+            *.tbz2)      tar xvjf $1    ;;
+            *.tgz)       tar xvzf $1    ;;
+            *.zip)       unzip $1       ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1        ;;
+            *.lzma)      lzma -dv $1    ;;
+            *.xz)        xz -dv $1      ;;
+            *)           echo "don't know how to extract '$1'..." ;;
+        esac
+    else
+        echo "'$1' is not a valid file!"
+    fi
+}

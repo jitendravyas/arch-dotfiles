@@ -1,0 +1,33 @@
+#───────────────────────────────────────────────────────────────────────────────
+# Declare common shell colours and properties
+#───────────────────────────────────────────────────────────────────────────────
+RED=$(tput setaf 1)
+ORANGE=$(tput setaf 3)
+MAGENTA=$(tput setaf 5)
+CYAN=$(tput setaf 6)
+BLUE=$(tput setaf 4)
+GREEN=$(tput setaf 2)
+WHITE=$(tput setaf 7)
+BOLD=$(tput bold)
+RESET=$(tput sgr0)
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# If we are in an active virtualenv, set `PYTHON_VIRTUALENV` for the prompt
+#───────────────────────────────────────────────────────────────────────────────
+set_virtualenv
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# The Git information we want to show within the prompt
+#───────────────────────────────────────────────────────────────────────────────
+GIT_PS1_SHOWDIRTYSTATE='1'
+GIT_PS1_SHOWSTASHSTATE='1'
+GIT_PS1_SHOWUNTRACKEDFILES='1'
+GIT_PS1_SHOWUPSTREAM="auto"
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# And… finally, the actual prompt itself
+#───────────────────────────────────────────────────────────────────────────────
+PS1='${PYTHON_VIRTUALENV}\[${BOLD}${GREEN}\]\u\[${WHITE}\]@\[${GREEN}\]\H\[${WHITE}\]:\[${BLUE}\]\w\[${RED}\]$(__git_ps1 " (%s)")\[${WHITE}\]\$ \[$RESET\]'

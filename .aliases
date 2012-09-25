@@ -1,0 +1,72 @@
+#───────────────────────────────────────────────────────────────────────────────
+# Shortcuts for navigation
+#───────────────────────────────────────────────────────────────────────────────
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# Shortcuts for stats
+#───────────────────────────────────────────────────────────────────────────────
+alias df='df -h'
+alias du='du -h -d 2'
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# Shortcuts for listing files and directories
+#───────────────────────────────────────────────────────────────────────────────
+alias ls="command ls --color"
+alias lsd='ls -l --color | grep "^d"'
+alias lh='ls -alt | head' # see the last modified files
+alias ll='ls -alGh'
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# Shortcuts for general tasks
+#───────────────────────────────────────────────────────────────────────────────
+alias sudo='sudo '
+alias g="git"
+alias h="history"
+alias j="jobs"
+alias v="vim"
+alias psa="ps aux"
+alias psg="ps aux | grep "
+alias less='less -R'
+alias tf='tail -f'
+alias l='less'
+alias cl='clear'
+alias gz='tar -zcvf'
+alias ex='extract'
+alias grep='grep --color=always'
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias rot13='tr a-zA-Z n-za-mN-ZA-M'
+
+#───────────────────────────────────────────────────────────────────────────────
+# Shortcuts for Git
+#───────────────────────────────────────────────────────────────────────────────
+alias gl="git lg"
+alias gp="git push origin HEAD"
+alias gd="git diff"
+alias gco="git checkout"
+alias gb="git branch"
+alias gs="git status -sb"
+alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# Shortcuts for networking
+#───────────────────────────────────────────────────────────────────────────────
+alias gurl="curl --compressed"
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en1"
+alias ips="ifconfig -a | grep -o 'inet6\? \(\([0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+\)\|[a-fA-F0-9:]\+\)' | sed -e 's/inet6* //'"
+alias whois="whois -h whois-servers.net"
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+    alias "$method"="lwp-request -m '$method'"
+done
