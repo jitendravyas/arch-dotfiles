@@ -38,3 +38,5 @@ export LANG="en_GB"
 # Source the functions required for a prompt containing the current Git status
 #───────────────────────────────────────────────────────────────────────────────
 [ -f ~/.shell/git-prompt.sh ] && . ~/.shell/git-prompt.sh
+
+# vim:ft=sh

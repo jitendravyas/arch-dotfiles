@@ -31,3 +31,5 @@ GIT_PS1_SHOWUPSTREAM="auto"
 # And… finally, the actual prompt itself
 #───────────────────────────────────────────────────────────────────────────────
 PS1='${PYTHON_VIRTUALENV}\[${BOLD}${GREEN}\]\u\[${WHITE}\]@\[${GREEN}\]\H\[${WHITE}\]:\[${BLUE}\]\w\[${RED}\]$(__git_ps1 " (%s)")\[${WHITE}\]\$ \[$RESET\]'
+
+# vim:ft=sh

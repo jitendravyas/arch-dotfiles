@@ -49,6 +49,7 @@ set showmode                " indicate what mode we're in in the status bar
 set foldmethod=indent       " allow us to fold on indents
 set foldlevel=99            " don't fold by default
 set relativenumber          " relative line numbers
+set modeline                " enable modelines
 
 " Add Git status to statusline
 set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
