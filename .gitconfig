@@ -10,6 +10,7 @@
     ci = commit
     co = checkout
     br = branch
+    ls = ls-tree --full-tree -r HEAD
 
     tags     = tag -l
     branches = branch -a
