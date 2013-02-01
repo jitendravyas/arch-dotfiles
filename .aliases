@@ -1,6 +1,7 @@
 #───────────────────────────────────────────────────────────────────────────────
 # Shortcuts for navigation
 #───────────────────────────────────────────────────────────────────────────────
+alias cd="venv_cd"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -49,7 +50,7 @@ alias rot13='tr a-zA-Z n-za-mN-ZA-M'
 #───────────────────────────────────────────────────────────────────────────────
 alias gl="git lg"
 alias gp="git push origin HEAD"
-alias gd="git diff"
+alias gd="git diff --no-prefix"
 alias gco="git checkout"
 alias gb="git branch"
 alias gs="git status -sb"
