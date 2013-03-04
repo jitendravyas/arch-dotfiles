@@ -8,9 +8,9 @@
     set runtimepath+=~/.vim/bundle/vundle/
     set runtimepath+=~/.vim/bundle/ctrlp.vim
 
-"    if has('gui_running')
+    if has('gui_running')
         set runtimepath+=~/.vim/bundle/powerline/powerline/bindings/vim
-"    endif
+    endif
 " }}}
 
 " Plugins {{{
@@ -29,33 +29,34 @@
     Bundle 'kien/ctrlp.vim'
     Bundle 'altercation/vim-colors-solarized'
 
-  "  if has('gui_running')
+    if has('gui_running')
         Bundle 'Lokaltog/powerline'
-  "  endif
+    endif
 " }}}
 
 " General {{{
-    syntax on                   " syntax highlighing
-    filetype plugin indent on   " enable detection of filetype
+    syntax on                   " Syntax highlighing
+    filetype plugin indent on   " Enable detection of filetype
     set wildmenu                " Menu completion in command mode on <Tab>
     set wildmode=full           " <Tab> cycles between all matching choices.
-    set modeline                " enable modelines
+    set modeline                " Enable modelines
+    set noswapfile              " No messy swap files
 
     " ignore
     set wildignore+=*.swp,*.bak,.svn,.git,*.jpg,*.gif,*.png,*.pyc
 " }}}
 
 " Appearance {{{
-    set t_Co=256                " enable full colour within the terminal
-    colorscheme smyck           " other options: molokai, solarized
+    set t_Co=256                " Enable full colour within the terminal
+    colorscheme smyck           " Other options: molokai, solarized
     set background=dark         " We are using dark background in vim
-    set guioptions-=T           " remove shortcut icons
-    set guioptions-=r           " remove scrollbar
-    set guioptions-=L           " remove left scrollbar
-    set guioptions-=m           " remove top menu
-    set showmode                " indicate what mode we're in in the status bar
-    set title                   " show title in console title bar
-    set cursorline              " display a horizontal line at the cursor position
+    set guioptions-=T           " Remove shortcut icons
+    set guioptions-=r           " Remove scrollbar
+    set guioptions-=L           " Remove left scrollbar
+    set guioptions-=m           " Remove top menu
+    set showmode                " Indicate what mode we're in in the status bar
+    set title                   " Show title in console title bar
+    set cursorline              " Display a horizontal line at the cursor position
     set report=0                " Always print changed line count
     set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written
     set laststatus=2            " Always show statusline, even if only 1 window
@@ -63,32 +64,32 @@
 " }}}
 
 " Searching {{{
-    set hlsearch                " highlight search matches
+    set hlsearch                " Highlight search matches
     set incsearch               " Incrementally search while typing a /regex
     set ignorecase              " Default to using case insensitive searches,
-    set smartcase               " unless uppercase letters are used in the regex
+    set smartcase               " Unless uppercase letters are used in the regex
     set smarttab                " Handle tabs more intelligently
-    set gdefault                " assume the /g flag on :s substitutions
+    set gdefault                " Assume the /g flag on :s substitutions
 " }}}
 
 " Moving {{{
-    set relativenumber          " relative line numbers
-    set scrolloff=5             " beging scrolling before cursor hits the top/bottom
+    set relativenumber          " Relative line numbers
+    set scrolloff=5             " Begin scrolling before cursor hits the top/bottom
 " }}}
 
 " Editing {{{
-    set nowrap                  " disable text wrapping
-    set tabstop=4               " a tab is four spaces, not eight (the default)
-    set expandtab               " convert tabs to tabstop * spaces
-    set shiftwidth=4            " how much to indent with '>>'
-    set softtabstop=4           " should be the same as 'tabstop'
+    set nowrap                  " Disable text wrapping
+    set tabstop=4               " A tab is four spaces, not eight (the default)
+    set expandtab               " Convert tabs to tabstop * spaces
+    set shiftwidth=4            " How much to indent with '>>'
+    set softtabstop=4           " Should be the same as 'tabstop'
     set confirm                 " Y-N-C prompt if closing with unsaved changes
     set showcmd                 " Show incomplete normal mode commands as I type
 " }}}
 
 " Folding  {{{
-    set foldmethod=indent       " allow us to fold on indents
-    set foldlevelstart=20       " don't fold by default
+    set foldmethod=indent       " Allow us to fold on indents
+    set foldlevelstart=20       " Don't fold by default
 
     " Automatically fold vim configuration files
     autocmd Syntax vim setlocal foldmethod=marker
@@ -97,13 +98,16 @@
 
 " Disable {{{
     " Only use the hjkl keys for movement
-    map <up> <nop>
-    map <down> <nop>
-    map <left> <nop>
-    map <right> <nop>
+    map <Up>    <Nop>
+    map <Down>  <Nop>
+    map <Left>  <Nop>
+    map <Right> <Nop>
 
     " Use 'jk' or 'jj' instead of Escape
-    inoremap <esc> <nop>
+    inoremap <Esc> <Nop>
+
+    " Never need undo in visual mode, always accidently hitting it though
+    vnoremap u <Nop>
 " }}}
 
 " No GUI {{{
@@ -111,6 +115,7 @@
         set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
         colorscheme molokai
 
+        " Move Powerline out of insert mode, fast
         augroup FastEscape
             autocmd!
             au InsertEnter * set ttimeoutlen=1
@@ -120,9 +125,16 @@
 " }}}
 
 " Remappings and Shortcuts {{{
-    " Quickly get out of insert mode with no cursor movement (either use 'jj' or 'jk')
-    inoremap jj <Esc>`^
-    inoremap jk <Esc>`^
+    " Quickly get out of insert mode (either use 'jj' or 'jk')
+    inoremap jj <Esc>
+    inoremap jk <Esc>
+
+    " Phat fingers yo'
+    noremap ` <Esc>
+    noremap <F1> <Esc>
+
+    " Repeat latest f in reverse (since , is the mapleader)
+    nnoremap m ,
 
     " Improve movement on wrapped lines
     nnoremap j gj
@@ -135,53 +147,61 @@
     set pastetoggle=<F2>
 
     " F5 strips trailing whitespace
-    nnoremap <silent> <F5> :call <SID>StripTrailingWhitespaces()<CR>
+    nnoremap <silent> <F5> :call StripTrailingWhitespace()<CR>
 
     " Allow backspace over everything in insert mode
     set backspace=eol,start,indent
 
     " Ctrl+[jklm] to navigate splits
-    map <c-j> <c-w>j
-    map <c-k> <c-w>k
-    map <c-l> <c-w>l
-    map <c-h> <c-w>h
+    map <C-j> <C-w>j
+    map <C-k> <C-w>k
+    map <C-l> <C-w>l
+    map <C-h> <C-w>h
 
     " Clear the search buffer when ./ is pressed
     nmap <silent> ,/ :nohlsearch<CR>
 
-    " Swapover mark jumping keys
-    nnoremap ' `
-    nnoremap ` '
-
-    " CtrlP fuzzy file and buffer search
-    map <c-p> <ESC>:CtrlP<CR>
-    map <c-o> <ESC>:CtrlPBuffer<CR>
+    " Ctrlp fuzzy file and buffer search
+    map <C-p> <Esc>:ctrlp<CR>
+    map <C-o> <Esc>:ctrlpbuffer<CR>
 
     " Reselect visual block after indent/outdent
     vnoremap < <gv
     vnoremap > >gv
 
+    " Sort (alphabetical, not numerical)
+    vnoremap <Leader>s :!sort<CR>
+
     " Turn off Vim's default regular expression handling and use Perl's
     nnoremap / /\v
     vnoremap / /\v
+
+    " Paste from the Linux clipboard
+    map <C-Q> "+gP
+
+    " Safe aliases the capital Q and W
+    cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
+    cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
 " }}}
 
 " Behaviour {{{
-    set noerrorbells            " shut those bells up
-    set novb                    " the same goes for visual bells
+    set noerrorbells            " Shut those bells up
+    set novisualbell            " The same goes for visual bells
 " }}}
 
 " NERD Tree {{{
-    " close Vim if NERD Tree is the only window open
+    " Ignore Python binaries
+    let NERDTreeIgnore = ['\.pyc$']
+
+    " Close Vim if NERD Tree is the only window open
     autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
 
-    " start NERD Tree on startup
-    autocmd vimenter * NERDTree
+    " Start NERD Tree on startup
+    autocmd VimEnter * NERDTree
 
-    " enter the right window on startup
-    autocmd vimenter * wincmd p
+    " Enter the right window on startup
+    autocmd VimEnter * wincmd p
 
-    let NERDTreeIgnore = ['\.pyc$']
     function! s:CloseIfOnlyNerdTreeLeft()
       if exists("t:NERDTreeBufName")
         if bufwinnr(t:NERDTreeBufName) != -1
@@ -195,7 +215,7 @@
 
 " Trailing Whitespace {{{
     " Run this when saving files with these extensions
-    autocmd BufWritePre *.py,*.js,*.css,*.scss,*.sass :call <SID>StripTrailingWhitespaces()
+    autocmd BufWritePre *.py,*.js,*.css,*.scss,*.sass :call StripTrailingWhitespace()
 
     " Highlight trailing whitespace
     highlight ExtraWhitespace ctermbg=red guibg=red
@@ -206,7 +226,7 @@
     autocmd BufWinLeave * call clearmatches()
 
     " Remove trailing whitespace
-    function! <SID>StripTrailingWhitespaces()
+    function! StripTrailingWhitespace()
         let _s=@/
         let l = line(".")
         let c = col(".")
@@ -216,7 +236,20 @@
     endfunction
 " }}}
 
-" Cursor Position {{{
+" Cursorline {{{
+    " Only show the cursor line within the active window
+    augroup CursorLine
+        autocmd!
+        autocmd WinLeave * set nocursorline
+        autocmd VimEnter,WinEnter * set cursorline
+    augroup END
+" }}}
+
+" Remember Information {{{
+    " Remember previous folds
+    au BufWinLeave * silent! mkview
+    au BufWinEnter * silent! loadview
+
     " Remember cursor position
     set viminfo='10,\"100,:20,%,n~/.viminfo
 
