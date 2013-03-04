@@ -7,7 +7,10 @@
 " Runtime Paths {{{
     set runtimepath+=~/.vim/bundle/vundle/
     set runtimepath+=~/.vim/bundle/ctrlp.vim
-    set runtimepath+=~/.vim/bundle/powerline/powerline/bindings/vim
+
+"    if has('gui_running')
+        set runtimepath+=~/.vim/bundle/powerline/powerline/bindings/vim
+"    endif
 " }}}
 
 " Plugins {{{
@@ -18,7 +21,6 @@
     Bundle 'tpope/vim-unimpaired'
     Bundle 'tpope/vim-fugitive'
     Bundle 'Lokaltog/vim-easymotion'
-    Bundle 'Lokaltog/powerline'
     Bundle 'scrooloose/nerdtree'
     Bundle 'scrooloose/nerdcommenter'
     Bundle 'Color-Sampler-Pack'
@@ -26,6 +28,10 @@
     Bundle 'evanmiller/nginx-vim-syntax'
     Bundle 'kien/ctrlp.vim'
     Bundle 'altercation/vim-colors-solarized'
+
+  "  if has('gui_running')
+        Bundle 'Lokaltog/powerline'
+  "  endif
 " }}}
 
 " General {{{
@@ -103,6 +109,7 @@
 " No GUI {{{
     if ! has('gui_running')
         set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
+        colorscheme molokai
 
         augroup FastEscape
             autocmd!
