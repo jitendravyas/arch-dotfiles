@@ -22,7 +22,7 @@ alias du='du -h -d 2'
 alias ls="command ls --color"
 alias lsd='ls -l --color | grep "^d"'
 alias lh='ls -alt | head' # see the last modified files
-alias ll='ls -alGh'
+alias ll='ls -lGh'
 
 
 #───────────────────────────────────────────────────────────────────────────────
