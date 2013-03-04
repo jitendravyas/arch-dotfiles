@@ -5,6 +5,5 @@ These are the the bootstrap ‘dotfiles’ I use on all of my Arch Linux boxes. 
 ## Installation
 
 ```bash
-git clone git@github.com:Matt-Stevens/arch-dotfiles.git
-cd arch-dotfiles && ./install.sh
+git clone git@github.com:Matt-Stevens/arch-dotfiles.git && cd arch-dotfiles && ./install.sh
 ```
