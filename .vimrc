@@ -75,6 +75,7 @@
 " Moving {{{
     set relativenumber          " Relative line numbers
     set scrolloff=5             " Begin scrolling before cursor hits the top/bottom
+    set sidescrolloff=20        " Begin scrolling before cursor hits the right hand side
 " }}}
 
 " Editing {{{
@@ -143,8 +144,8 @@
     " Quick yanking to the end of the line
     nnoremap Y y$
 
-    " Toggle paste
-    set pastetoggle=<F2>
+    " Toggle paste (pastetoggle doesn't redraw the screen)
+    nnoremap <F2> :set paste!<CR>
 
     " F5 strips trailing whitespace
     nnoremap <silent> <F5> :call StripTrailingWhitespace()<CR>
@@ -182,6 +183,24 @@
     " Safe aliases the capital Q and W
     cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
     cnoreabbrev <expr> W ((getcmdtype() is# ':' && getcmdline() is# 'W')?('w'):('W'))
+
+    " Keep search matches in the middle of the window
+    nnoremap n nzzzv
+    nnoremap N Nzzzv
+
+   " Space to toggle folds
+    nnoremap <Space> za
+    vnoremap <Space> za
+
+    " Easy filetype switching
+    nnoremap _md :set ft=markdown<CR>
+    nnoremap _hd :set ft=htmldjango<CR>
+    nnoremap _js :set ft=javascript<CR>
+    nnoremap _pd :set ft=python.django<CR>
+    nnoremap _d  :set ft=diff<CR>
+
+    " Select current line excluding indentation
+    nnoremap vv ^vg_
 " }}}
 
 " Behaviour {{{
