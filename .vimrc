@@ -20,6 +20,7 @@
     Bundle 'tpope/vim-repeat'
     Bundle 'tpope/vim-unimpaired'
     Bundle 'tpope/vim-fugitive'
+    Bundle 'tpope/vim-commentary'
     Bundle 'Lokaltog/vim-easymotion'
     Bundle 'scrooloose/nerdtree'
     Bundle 'scrooloose/nerdcommenter'
@@ -41,6 +42,7 @@
     set wildmode=full           " <Tab> cycles between all matching choices.
     set modeline                " Enable modelines
     set noswapfile              " No messy swap files
+    set history=2000            " Remember more Ex-Commands
 
     " ignore
     set wildignore+=*.swp,*.bak,.svn,.git,*.jpg,*.gif,*.png,*.pyc
@@ -201,6 +203,10 @@
 
     " Select current line excluding indentation
     nnoremap vv ^vg_
+
+    " Backwards and fowards through command and search history
+    cnoremap <C-p> <Up>
+    cnoremap <C-n> <Down>
 " }}}
 
 " Behaviour {{{
@@ -265,9 +271,9 @@
 " }}}
 
 " Remember Information {{{
-    " Remember previous folds
-    au BufWinLeave * silent! mkview
-    au BufWinEnter * silent! loadview
+    " Remember previous folds (the conditional is necessary due to a bug in Vundle)
+    au BufWinLeave * if &modifiable | silent mkview | endif
+    au BufWinEnter * if &modifiable | silent loadview | endif
 
     " Remember cursor position
     set viminfo='10,\"100,:20,%,n~/.viminfo
