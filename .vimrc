@@ -106,6 +106,12 @@
     map <Left>  <Nop>
     map <Right> <Nop>
 
+    " The same applies to insert mode
+    imap <Up>    <Nop>
+    imap <Down>  <Nop>
+    imap <Left>  <Nop>
+    imap <Right> <Nop>
+
     " Use 'jk' or 'jj' instead of Escape
     inoremap <Esc> <Nop>
 
@@ -215,6 +221,9 @@
 " }}}
 
 " NERD Tree {{{
+    " Change to the directory of the file being opened
+    autocmd BufEnter * silent! lcd %:p:h
+
     " Ignore Python binaries
     let NERDTreeIgnore = ['\.pyc$']
 
@@ -228,13 +237,9 @@
     autocmd VimEnter * wincmd p
 
     function! s:CloseIfOnlyNerdTreeLeft()
-      if exists("t:NERDTreeBufName")
-        if bufwinnr(t:NERDTreeBufName) != -1
-          if winnr("$") == 1
+        if tabpagenr('$') == 1 && winnr('$') == 1
             q
-          endif
         endif
-      endif
     endfunction
 " }}}
 
