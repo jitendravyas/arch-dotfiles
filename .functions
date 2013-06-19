@@ -3,7 +3,7 @@
 #───────────────────────────────────────────────────────────────────────────────
 has_virtualenv() {
     if [ -e .venv ]; then
-        source `cat .venv`
+	workon `cat .venv`
     fi
 }
 
