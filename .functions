@@ -19,8 +19,9 @@ venv_cd() {
 #───────────────────────────────────────────────────────────────────────────────
 # cleanpy: search and remove all compiled python files (.pyc)
 #───────────────────────────────────────────────────────────────────────────────
-function findpy() {
-    find . -iname "*.pyc" -type f -exec rm {} \;
+function clearpy() {
+    DEFAULT="."
+    find ${1-$DEFAULT} -iname "*.pyc" -type f -exec rm {} \;
 }
 
 
