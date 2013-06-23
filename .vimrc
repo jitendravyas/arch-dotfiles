@@ -29,6 +29,7 @@
     Bundle 'evanmiller/nginx-vim-syntax'
     Bundle 'kien/ctrlp.vim'
     Bundle 'altercation/vim-colors-solarized'
+    Bundle 'Matt-Stevens/Smyck-Color-Scheme'
 
     if has('gui_running')
         Bundle 'Lokaltog/powerline'
