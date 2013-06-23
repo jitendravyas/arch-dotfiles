@@ -112,7 +112,7 @@ function dataurl() {
 #───────────────────────────────────────────────────────────────────────────────
 function server() {
 	local port="${1:-8000}"
-	python2 -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
+	python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port"
 }
 
 
@@ -150,9 +150,9 @@ function httpcompression() {
 #───────────────────────────────────────────────────────────────────────────────
 function json() {
 	if [ -t 0 ]; then
-		python2 -mjson.tool <<< "$*" | pygmentize -l javascript
+		python -mjson.tool <<< "$*" | pygmentize -l javascript
 	else
-		python2 -mjson.tool | pygmentize -l javascript
+		python -mjson.tool | pygmentize -l javascript
 	fi
 }
 
