@@ -24,7 +24,7 @@
     Bundle 'Lokaltog/vim-easymotion'
     Bundle 'scrooloose/nerdtree'
     Bundle 'scrooloose/nerdcommenter'
-    Bundle 'Color-Sampler-Pack'
+    Bundle 'vim-scripts/Colour-Sampler-Pack'
     Bundle 'mattn/zencoding-vim'
     Bundle 'evanmiller/nginx-vim-syntax'
     Bundle 'kien/ctrlp.vim'
