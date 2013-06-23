@@ -220,4 +220,50 @@ extract () {
     fi
 }
 
+#───────────────────────────────────────────────────────────────────────────────
+# git-play: a ‘Read-eval-print-loop’ shell to quickly setup various scenarios in
+#           a Git repository, handy for learning the more advanced parts of Git
+#───────────────────────────────────────────────────────────────────────────────
+git-play () {
+    commits=( Alpha Beta Charlie Delta Epsilon Foxtrot Golf Hotel India Juliett Kilo Lima Mike )
+    commit_index=0
+
+    filenames=( index.html todo.txt README.md Makefile )
+    filename_index=0
+
+    branches=( bugFix feature maint develop )
+    branch_index=0
+
+    mkd $1 && git init -q
+    echo -e "usage:\n"               \
+	    "    f    create file\n" \
+	    "    c    commit\n"      \
+	    "    b    new branch\n"
+
+    while echo -n "git> "; read -r COMMAND; do
+	case $COMMAND in
+	    "q")
+		break;
+		;;
+	    "c")
+		echo "New commit: ${commits[$commit_index]}"
+		echo ${commits[$commit_index]} >> ${filenames[$filename_index-1]}
+		git add .
+		git commit -m "Added: '${commits[$commit_index]}'"
+		commit_index=$((commit_index+1))
+		;;
+	    "f")
+		echo "New file: ${filenames[$filename_index]}"
+		touch ${filenames[$filename_index]}
+		filename_index=$((filename_index+1))
+		;;
+	    "b")
+		echo "New branch: ${branches[$branch_index]}"
+		git checkout -b ${branches[$branch_index]}
+		branch_index=$((branch_index+1))
+		;;
+	esac
+    done
+}
+
 # vim:ft=sh
