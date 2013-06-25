@@ -21,7 +21,7 @@ venv_cd() {
 #───────────────────────────────────────────────────────────────────────────────
 function clearpy() {
     DEFAULT="."
-    find ${1-$DEFAULT} -iname "*.pyc" -type f -exec rm {} \;
+    find ${1-$DEFAULT} -iname "*.pyc" -type f -print0 | xargs -0 rm
 }
 
 
@@ -30,7 +30,7 @@ function clearpy() {
 #───────────────────────────────────────────────────────────────────────────────
 function findpy() {
     DEFAULT="."
-    find ${2-$DEFAULT} -iname "*.py" -type f -print0 | xargs -0 grep -iH --color=always $1
+    find ${2-$DEFAULT} -iname "*.py" -type f -print0 | xargs -0 grep -iH --color=always "$1"
 }
 
 
@@ -58,7 +58,7 @@ function set_virtualenv() {
 # repeat: execute a command n times, e.g. `repeat 5 uptime`
 #───────────────────────────────────────────────────────────────────────────────
 repeat() {
-    n=$1
+    n="$1"
     shift
     while [ $(( n -= 1 )) -ge 0 ]
     do
@@ -197,28 +197,41 @@ function codepoint() {
 # extract: uncompress and expand most types compressed files
 #───────────────────────────────────────────────────────────────────────────────
 extract () {
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2)   tar xvjf $1    ;;
-            *.tar.gz)    tar xvzf $1    ;;
-            *.tar.xz)    tar xvJf $1    ;;
-            *.bz2)       bunzip2 $1     ;;
-            *.rar)       unrar x $1     ;;
-            *.gz)        gunzip $1      ;;
-            *.tar)       tar xvf $1     ;;
-            *.tbz2)      tar xvjf $1    ;;
-            *.tgz)       tar xvzf $1    ;;
-            *.zip)       unzip $1       ;;
-            *.Z)         uncompress $1  ;;
-            *.7z)        7z x $1        ;;
-            *.lzma)      lzma -dv $1    ;;
-            *.xz)        xz -dv $1      ;;
+    if [ -f "$1" ] ; then
+        case "$1" in
+            *.tar.bz2)   tar xvjf "$1"    ;;
+            *.tar.gz)    tar xvzf "$1"    ;;
+            *.tar.xz)    tar xvJf "$1"    ;;
+            *.bz2)       bunzip2 "$1"     ;;
+            *.rar)       unrar x "$1"     ;;
+            *.gz)        gunzip "$1"      ;;
+            *.tar)       tar xvf "$1"     ;;
+            *.tbz2)      tar xvjf "$1"    ;;
+            *.tgz)       tar xvzf "$1"    ;;
+            *.zip)       unzip "$1"       ;;
+            *.Z)         uncompress "$1"  ;;
+            *.7z)        7z x "$1"        ;;
+            *.lzma)      lzma -dv "$1"    ;;
+            *.xz)        xz -dv "$1"      ;;
             *)           echo "don't know how to extract '$1'..." ;;
         esac
     else
         echo "'$1' is not a valid file!"
     fi
 }
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# archive: create an archive (.tar.gz) from a directory
+#───────────────────────────────────────────────────────────────────────────────
+archive () {
+    if [ -d "$1" ] ; then
+        tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"
+    else
+        echo "'$1' is not a valid directory!"
+    fi
+}
+
 
 #───────────────────────────────────────────────────────────────────────────────
 # git-play: a ‘Read-eval-print-loop’ shell to quickly setup various scenarios in
@@ -234,7 +247,7 @@ git-play () {
     branches=( bugFix feature maint develop )
     branch_index=0
 
-    mkd $1 && git init -q
+    mkd "$1" && git init -q
     echo -e "usage:\n"               \
 	    "    f    create file\n" \
 	    "    c    commit\n"      \
