@@ -223,7 +223,7 @@
 
 " NERD Tree {{{
     " Change to the directory of the file being opened
-    autocmd BufEnter * silent! lcd %:p:h
+    autocmd BufEnter ?* silent! lcd %:p:h
 
     " Ignore Python binaries
     let NERDTreeIgnore = ['\.pyc$']
@@ -251,10 +251,10 @@
     " Highlight trailing whitespace
     highlight ExtraWhitespace ctermbg=red guibg=red
     match ExtraWhitespace /\s\+$/
-    autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-    autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-    autocmd BufWinLeave * call clearmatches()
+    autocmd BufWinEnter ?* match ExtraWhitespace /\s\+$/
+    autocmd InsertEnter ?* match ExtraWhitespace /\s\+\%#\@<!$/
+    autocmd InsertLeave ?* match ExtraWhitespace /\s\+$/
+    autocmd BufWinLeave ?* call clearmatches()
 
     " Remove trailing whitespace
     function! StripTrailingWhitespace()
@@ -278,8 +278,8 @@
 
 " Remember Information {{{
     " Remember previous folds (the conditional is necessary due to a bug in Vundle)
-    au BufWinLeave * if &modifiable | silent mkview | endif
-    au BufWinEnter * if &modifiable | silent loadview | endif
+    au BufWinLeave ?* if &modifiable | silent mkview | endif
+    au BufWinEnter ?* if &modifiable | silent loadview | endif
 
     " Remember cursor position
     set viminfo='10,\"100,:20,%,n~/.viminfo
@@ -293,6 +293,6 @@
 
     augroup resCur
       autocmd!
-      autocmd BufWinEnter * call ResCur()
+      autocmd BufWinEnter ?* call ResCur()
     augroup END
 " }}}
