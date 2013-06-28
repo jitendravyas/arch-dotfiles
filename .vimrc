@@ -30,6 +30,7 @@
     Bundle 'kien/ctrlp.vim'
     Bundle 'altercation/vim-colors-solarized'
     Bundle 'Matt-Stevens/Smyck-Color-Scheme'
+    Bundle 'klen/python-mode'
 
     if has('gui_running')
         Bundle 'Lokaltog/powerline'
