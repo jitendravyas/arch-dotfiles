@@ -46,8 +46,11 @@ alias ex='extract'
 alias grep='grep --color=always'
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias rot13='tr a-zA-Z n-za-mN-ZA-M'
-alias vim='gvim'
-alias qtile-config='gvim ~/.config/qtile/config.py'
+# these last two should only exist if we're physically on the machine
+if ! [ -n "$SSH_CLIENT" ]; then
+    alias vim='gvim'
+    alias qtile-config='gvim ~/.config/qtile/config.py'
+fi
 
 #───────────────────────────────────────────────────────────────────────────────
 # Shortcuts for Git
