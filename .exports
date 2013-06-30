@@ -53,4 +53,11 @@ export VIRTUALENVWRAPPER_VIRTUALENV=/usr/bin/virtualenv
 export WORKON_HOME=/www/.envs
 source /usr/bin/virtualenvwrapper.sh
 
+
+#───────────────────────────────────────────────────────────────────────────────
+# `pip` should use mirrors if PyPi is down
+#───────────────────────────────────────────────────────────────────────────────
+export PIP_USE_MIRRORS=true
+
+
 # vim:ft=sh
