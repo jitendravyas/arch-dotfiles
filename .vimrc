@@ -125,6 +125,7 @@
     if ! has('gui_running')
         set statusline=[%l,%v\ %P%M]\ %f\ %r%h%w\ (%{&ff})\ %{fugitive#statusline()}
         colorscheme molokai
+        let g:NERDTreeDirArrows=0
 
         " Move Powerline out of insert mode, fast
         augroup FastEscape
