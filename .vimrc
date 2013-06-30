@@ -145,9 +145,6 @@
     noremap ` <Esc>
     noremap <F1> <Esc>
 
-    " Repeat latest f in reverse (since , is the mapleader)
-    nnoremap m ,
-
     " Improve movement on wrapped lines
     nnoremap j gj
     nnoremap k gk
