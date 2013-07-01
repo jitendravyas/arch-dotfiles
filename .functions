@@ -234,6 +234,23 @@ archive () {
 
 
 #───────────────────────────────────────────────────────────────────────────────
+# list-archive: list the contents of an archive or compressed file
+#───────────────────────────────────────────────────────────────────────────────
+list-archive () {
+    if [ -f "$1" ] ; then
+        case "$1" in
+            *.tar.bz2) tar jtvf "$1"    ;;
+            *.tar.gz)  tar ztvf "$1"    ;;
+            *.tar)     tar tvf "$1"     ;;
+            *)         echo "don't know how to list contents of '$1'..." ;;
+        esac
+    else
+        echo "'$1' is not a valid file!"
+    fi
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
 # git-play: a ‘Read-eval-print-loop’ shell to quickly setup various scenarios in
 #           a Git repository, handy for learning the more advanced parts of Git
 #───────────────────────────────────────────────────────────────────────────────
