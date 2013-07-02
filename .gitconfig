@@ -26,7 +26,11 @@
 [core]
     whitespace = space-before-tab,indent-with-non-tab,trailing-space
     pager = less -R
-    editor = vim
+    # jump to the first line when writing/editing a commit message
+    editor = vim -c ':normal gg'
+
+[commit]
+    template = ~/.commit-template.txt
 
 [color]
     ui = auto

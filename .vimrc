@@ -38,7 +38,7 @@
 " }}}
 
 " General {{{
-    syntax on                   " Syntax highlighing
+    syntax on                   " Syntax highlighting
     filetype plugin indent on   " Enable detection of filetype
     set wildmenu                " Menu completion in command mode on <Tab>
     set wildmode=full           " <Tab> cycles between all matching choices.
@@ -82,6 +82,12 @@
     set sidescrolloff=20        " Begin scrolling before cursor hits the right hand side
 " }}}
 
+" Git Commit Editing {{{
+    " Add a red line at 72 chars, keeping commit messages
+    " short n' sweet. Also turn on spell checking
+    autocmd Filetype gitcommit setlocal textwidth=72 colorcolumn=72 spell
+" }}}
+
 " Editing {{{
     set nowrap                  " Disable text wrapping
     set tabstop=4               " A tab is four spaces, not eight (the default)
@@ -90,6 +96,7 @@
     set softtabstop=4           " Should be the same as 'tabstop'
     set confirm                 " Y-N-C prompt if closing with unsaved changes
     set showcmd                 " Show incomplete normal mode commands as I type
+    set spelllang=en_gb         " Set region to British English
 " }}}
 
 " Folding  {{{
@@ -117,7 +124,7 @@
     " Use 'jk' or 'jj' instead of Escape
     inoremap <Esc> <Nop>
 
-    " Never need undo in visual mode, always accidently hitting it though
+    " Never need undo in visual mode, always accidentally hitting it though
     vnoremap u <Nop>
 " }}}
 
@@ -210,9 +217,12 @@
     " Select current line excluding indentation
     nnoremap vv ^vg_
 
-    " Backwards and fowards through command and search history
+    " Backwards and forwards through command and search history
     cnoremap <C-p> <Up>
     cnoremap <C-n> <Down>
+
+    " Toggle spell checking on and off
+    nnoremap <silent> <F4> :set spell!<CR>
 " }}}
 
 " Behaviour {{{
