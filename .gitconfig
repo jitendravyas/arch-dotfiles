@@ -17,6 +17,13 @@
     branches = branch -a
     remotes  = remote -v
 
+    # credit: http://bit.ly/w06LOM
+    ribbon = tag --force _ribbon origin/master
+    catchup = log --patch --reverse --topo-order _ribbon..origin/master
+
+    # credit: http://bit.ly/10MMsoF
+    snapshot = !git stash save -u "snapshot: $(date)" && git stash apply "stash@{0}"
+
     lg = log --pretty=format:\"%Cred%h%Creset%C(bold)%x09%aN%Creset%x09%C(cyan)%ad (%cr)%Creset%x09%C(bold green)%s%Creset\" --date=iso
     lt = log --graph --oneline --all
 
