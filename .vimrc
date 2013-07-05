@@ -31,6 +31,10 @@
     Bundle 'altercation/vim-colors-solarized'
     Bundle 'Matt-Stevens/Smyck-Color-Scheme'
     Bundle 'klen/python-mode'
+    Bundle 'MarcWeber/vim-addon-mw-utils'
+    Bundle 'tomtom/tlib_vim'
+    Bundle 'garbas/vim-snipmate'
+    Bundle 'honza/vim-snippets'
 
     if has('gui_running')
         Bundle 'Lokaltog/powerline'
