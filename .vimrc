@@ -197,7 +197,7 @@
     vnoremap / /\v
 
     " Paste from the Linux clipboard
-    map <C-Q> "+gP
+    nnoremap <C-Q> "+gP
 
     " Safe aliases the capital Q and W
     cnoreabbrev <expr> Q ((getcmdtype() is# ':' && getcmdline() is# 'Q')?('q'):('Q'))
