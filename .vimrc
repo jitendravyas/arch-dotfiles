@@ -35,6 +35,7 @@
     Bundle 'tomtom/tlib_vim'
     Bundle 'garbas/vim-snipmate'
     Bundle 'honza/vim-snippets'
+    Bundle 'Matt-Stevens/vim-systemd-syntax'
 
     if has('gui_running')
         Bundle 'Lokaltog/powerline'
