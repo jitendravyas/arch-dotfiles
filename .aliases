@@ -15,6 +15,7 @@ alias -- -="cd -"
 alias df='df -h'
 alias du='du -h -d 2'
 alias battery='acpi | cut -d " " -f3-'
+alias cpu-temp='sensors | grep "Physical" | cut -c35-40'
 
 
 #───────────────────────────────────────────────────────────────────────────────
