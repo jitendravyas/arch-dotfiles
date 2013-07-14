@@ -1,4 +1,22 @@
 #───────────────────────────────────────────────────────────────────────────────
+# start: start a systemd service unit and show it's status
+#───────────────────────────────────────────────────────────────────────────────
+start() {
+    systemctl start "$@.service"
+    systemctl status -a "$@.service"
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
+# stop: stop a systemd service unit and show it's status
+#───────────────────────────────────────────────────────────────────────────────
+stop() {
+    systemctl stop "$@.service"
+    systemctl status -a "$@.service"
+}
+
+
+#───────────────────────────────────────────────────────────────────────────────
 # has_virtualenv: if '.venv' exists, use it's content to activate a virtualenv
 #───────────────────────────────────────────────────────────────────────────────
 has_virtualenv() {
