@@ -41,7 +41,7 @@ alias tree="tree --dirsfirst -Cha"
 #───────────────────────────────────────────────────────────────────────────────
 # Shortcuts for general tasks
 #───────────────────────────────────────────────────────────────────────────────
-alias sudo='sudo '
+alias s="sudo "
 alias g="git"
 alias h="history"
 alias j="jobs"
